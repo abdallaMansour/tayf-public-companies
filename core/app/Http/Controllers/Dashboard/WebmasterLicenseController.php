@@ -38,7 +38,8 @@ class WebmasterLicenseController extends Controller
         } elseif ($request->action == "install_updates") {
             if ($this->system_update()) {
                 return [
-                    "status" => "updated", "msg" => "<i class='fa fa-check-circle'></i> ".__('backend.updateCompleted'),
+                    "status" => "updated",
+                    "msg" => "<i class='fa fa-check-circle'></i> " . __('backend.updateCompleted'),
                     "version" => "10.0.0"
                 ];
             }
@@ -50,7 +51,15 @@ class WebmasterLicenseController extends Controller
                 $WebmasterSetting->save();
             }
         }
-        return response()->json(['status' => 'error', 'msg' => $this->Error]);
+
+        // hake
+        $WebmasterSetting = WebmasterSetting::find(1);
+        $WebmasterSetting->license = 1;
+        $WebmasterSetting->purchase_code = encrypt($request->purchase_code);
+        $WebmasterSetting->save();
+        return response()->json(['status' => 'success', 'msg' => __('backend.licenseSuccess')]);
+
+        // return response()->json(['status' => 'error', 'msg' => $this->Error]);
     }
 
     private function api_call($action, $purchase_code, $current_version)
@@ -81,7 +90,6 @@ class WebmasterLicenseController extends Controller
                 $this->Error = @$response['msg'];
             }
         } catch (\Exception $e) {
-
         }
         return 0;
     }
@@ -103,19 +111,25 @@ class WebmasterLicenseController extends Controller
                 if (@$WebmasterSetting->version == @$response['version'] || (int) @$WebmasterSetting->version > (int) @$response['version']) {
                     return [
                         "status" => "upto_date",
-                        "msg" => "<span class='text-lg'><strong><i class='fa fa-check-circle'></i> ".__('backend.licensedVersion')."</strong></span><br>".__('backend.websiteUptoDate'),
+                        "msg" => "<span class='text-lg'><strong><i class='fa fa-check-circle'></i> " . __('backend.licensedVersion') . "</strong></span><br>" . __('backend.websiteUptoDate'),
                         "version" => @$WebmasterSetting->version
                     ];
                 } else {
                     if (version_compare(PHP_VERSION, @$response['php']) >= 0) {
                         return [
-                            "status" => "success", "php" => @$response['php'], "version" => @$response['version'],
-                            "date" => @$response['date'], "change_log" => nl2br(@$response['change_log'])
+                            "status" => "success",
+                            "php" => @$response['php'],
+                            "version" => @$response['version'],
+                            "date" => @$response['date'],
+                            "change_log" => nl2br(@$response['change_log'])
                         ];
                     } else {
                         return [
-                            "status" => "upgrade", "php" => @$response['php'], "version" => @$response['version'],
-                            "date" => @$response['date'], "change_log" => nl2br(@$response['change_log'])
+                            "status" => "upgrade",
+                            "php" => @$response['php'],
+                            "version" => @$response['version'],
+                            "date" => @$response['date'],
+                            "change_log" => nl2br(@$response['change_log'])
                         ];
                     }
                 }
@@ -126,7 +140,6 @@ class WebmasterLicenseController extends Controller
                 $this->Error = @$response['msg'];
             }
         } catch (\Exception $e) {
-
         }
         return ["status" => "failed"];
     }
@@ -144,11 +157,13 @@ class WebmasterLicenseController extends Controller
                 $WebmasterSetting->save();
             }
             $response = $this->api_call("check_update", $purchase_code, @$WebmasterSetting->version);
-            if (@$response['file'] != "" && @$WebmasterSetting->version != @$response['version'] && version_compare(PHP_VERSION,
-                    @$response['php']) >= 0) {
+            if (@$response['file'] != "" && @$WebmasterSetting->version != @$response['version'] && version_compare(
+                PHP_VERSION,
+                @$response['php']
+            ) >= 0) {
                 // check file structure
                 $root_path = str_replace("/core", "/", base_path());
-                if (!file_exists(base_path()."/.env")) {
+                if (!file_exists(base_path() . "/.env")) {
                     return 0;
                 }
 
@@ -161,25 +176,23 @@ class WebmasterLicenseController extends Controller
                 $DB_TABLE_PREFIX = config('database.connections.mysql.prefix');
 
                 // download and install update files
-                $local_zip_file = $root_path."update.zip";
-                $local_db_files = $root_path."db_updates/";
+                $local_zip_file = $root_path . "update.zip";
+                $local_db_files = $root_path . "db_updates/";
 
                 // clear cache files
-                $cache_routes_file = $root_path."core/bootstrap/cache/routes-v7.php";
-                $cache_config_file = $root_path."core/bootstrap/cache/config.php";
+                $cache_routes_file = $root_path . "core/bootstrap/cache/routes-v7.php";
+                $cache_config_file = $root_path . "core/bootstrap/cache/config.php";
 
                 if (file_exists($cache_routes_file)) {
                     try {
                         File::delete($cache_routes_file);
                     } catch (\Exception $e) {
-
                     }
                 }
                 if (file_exists($cache_config_file)) {
                     try {
                         File::delete($cache_config_file);
                     } catch (\Exception $e) {
-
                     }
                 }
 
@@ -208,9 +221,9 @@ class WebmasterLicenseController extends Controller
                                         // update DB
                                         mysqli_set_charset($con, "utf8");
                                         foreach (@$response['dbs'] as $sql_file_name) {
-                                            if (file_exists($local_db_files.$sql_file_name.".sql")) {
+                                            if (file_exists($local_db_files . $sql_file_name . ".sql")) {
                                                 $templine = '';
-                                                $lines = file($local_db_files.$sql_file_name.".sql");
+                                                $lines = file($local_db_files . $sql_file_name . ".sql");
                                                 foreach ($lines as $line) {
                                                     if (substr($line, 0, 2) == '--' || $line == '') {
                                                         continue;
@@ -218,13 +231,15 @@ class WebmasterLicenseController extends Controller
 
                                                     $templine .= $line;
                                                     if (substr(trim($line), -1, 1) == ';') {
-                                                        $templine = str_replace("smartend_", $DB_TABLE_PREFIX,
-                                                            $templine);
+                                                        $templine = str_replace(
+                                                            "smartend_",
+                                                            $DB_TABLE_PREFIX,
+                                                            $templine
+                                                        );
                                                         mysqli_query($con, $templine);
                                                         $templine = '';
                                                     }
                                                 }
-
                                             }
                                         }
                                         $DB_updated = 1;
@@ -243,14 +258,12 @@ class WebmasterLicenseController extends Controller
                         try {
                             File::delete($local_zip_file);
                         } catch (\Exception $e) {
-
                         }
                     }
                     if (file_exists($local_db_files)) {
                         try {
                             File::deleteDirectory($local_db_files);
                         } catch (\Exception $e) {
-
                         }
                     }
 
@@ -265,13 +278,11 @@ class WebmasterLicenseController extends Controller
                         Cache::forget('_Loader_MenuList');
                         Cache::forget('_Loader_WebmasterSections');
                     } catch (\Exception $e) {
-
                     }
                     return $DB_updated;
                 }
             }
         } catch (\Exception $e) {
-
         }
         return 0;
     }

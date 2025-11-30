@@ -56,8 +56,10 @@ class Helper
     static function eventsAlerts()
     {
         $_Loader_Events = Cache::remember('_Loader_Events', 60 * 24, function () {
-            return Event::where('start_date', '>=', date('Y-m-d H:i:s'))->orderby('start_date',
-                'asc')->limit(10)->get();
+            return Event::where('start_date', '>=', date('Y-m-d H:i:s'))->orderby(
+                'start_date',
+                'asc'
+            )->limit(10)->get();
         });
         if (@Auth::user()->permissionsGroup->view_status) {
             return $_Loader_Events->where('created_by', '=', Auth::user()->id);
@@ -112,31 +114,31 @@ class Helper
 
         if (preg_match('/Trident\/(\d+\.\d+)/', $userAgent, $matches)) {
             $version = intval($matches[1]) + 4;
-            return 'Internet Explorer '.$version;
+            return 'Internet Explorer ' . $version;
         }
 
         if (preg_match('/MSIE (\d+\.\d+)/', $userAgent, $matches)) {
-            return 'Internet Explorer '.intval($matches[1]);
+            return 'Internet Explorer ' . intval($matches[1]);
         }
 
         if (preg_match('/Edg\/(\d+\.\d+)/', $userAgent, $matches)) {
-            return 'Microsoft Edge '.$matches[1];
+            return 'Microsoft Edge ' . $matches[1];
         }
 
         if (preg_match('/OPR\/(\d+\.\d+)/', $userAgent, $matches)) {
-            return 'Opera '.$matches[1];
+            return 'Opera ' . $matches[1];
         }
 
         if (preg_match('/Chrome\/(\d+\.\d+)/', $userAgent, $matches)) {
-            return 'Chrome '.$matches[1];
+            return 'Chrome ' . $matches[1];
         }
 
         if (preg_match('/Firefox\/(\d+\.\d+)/', $userAgent, $matches)) {
-            return 'Firefox '.$matches[1];
+            return 'Firefox ' . $matches[1];
         }
 
         if (preg_match('/Safari\/(\d+\.\d+)/', $userAgent, $matches) && !preg_match('/Chrome/', $userAgent)) {
-            return 'Safari '.$matches[1];
+            return 'Safari ' . $matches[1];
         }
 
         return 'Unknown';
@@ -229,7 +231,6 @@ class Helper
                         try {
                             $visitor_ip_details = GeoIP($visitor_ip);
                         } catch (\Exception $e) {
-
                         }
 
                         $visitor_city = @$visitor_ip_details->city;
@@ -313,14 +314,18 @@ class Helper
                 $VisitedPage->date = date('Y-m-d');
                 $VisitedPage->time = date('H:i:s');
                 $VisitedPage->save();
-
-
             } else {
                 // Already Saved to analyticsVisitors
                 // Check if page saved
-                $Savedpage = AnalyticsPage::where('visitor_id', '=', $SavedVisitor->id)->where('ip', '=',
-                    $visitor_ip)->where('date', '=', date('Y-m-d'))->where('query', '=',
-                    $current_page_full_link)->first();
+                $Savedpage = AnalyticsPage::where('visitor_id', '=', $SavedVisitor->id)->where(
+                    'ip',
+                    '=',
+                    $visitor_ip
+                )->where('date', '=', date('Y-m-d'))->where(
+                    'query',
+                    '=',
+                    $current_page_full_link
+                )->first();
                 if (empty($Savedpage)) {
                     $VisitedPage = new AnalyticsPage;
                     $VisitedPage->visitor_id = $SavedVisitor->id;
@@ -333,7 +338,6 @@ class Helper
                     $VisitedPage->time = date('H:i:s');
                     $VisitedPage->save();
                 }
-
             }
         }
     }
@@ -371,19 +375,19 @@ class Helper
 
         switch ($social) {
             case "facebook":
-                $shareLink = "https://www.facebook.com/sharer/sharer.php?u=".urlencode($URL);
+                $shareLink = "https://www.facebook.com/sharer/sharer.php?u=" . urlencode($URL);
                 break;
             case "twitter":
-                $shareLink = "https://twitter.com/share?text=$title&url=".urlencode($URL);
+                $shareLink = "https://twitter.com/share?text=$title&url=" . urlencode($URL);
                 break;
             case "linkedin":
-                $shareLink = "http://www.linkedin.com/shareArticle?mini=true&url=".urlencode($URL)."&title=$title";
+                $shareLink = "http://www.linkedin.com/shareArticle?mini=true&url=" . urlencode($URL) . "&title=$title";
                 break;
             case "tumblr":
-                $shareLink = "http://www.tumblr.com/share/link?url=".urlencode($URL);
+                $shareLink = "http://www.tumblr.com/share/link?url=" . urlencode($URL);
                 break;
             case "whatsapp":
-                $shareLink = "whatsapp://send?text=".urlencode($URL);
+                $shareLink = "whatsapp://send?text=" . urlencode($URL);
                 break;
         }
 
@@ -392,41 +396,40 @@ class Helper
 
     static function GetIcon($path, $size = "24px", $bootstrap = 4)
     {
-        $ext = strtolower(".".pathinfo($path, PATHINFO_EXTENSION));
+        $ext = strtolower("." . pathinfo($path, PATHINFO_EXTENSION));
         $ico = "fa";
         if ($bootstrap == 5) {
             $ico = "fa-solid";
         }
         $icon = "<i class=\"fa fa-file-o\"></i>";
         if ($ext == ".pdf") {
-            $icon = "<i class=\"".$ico." fa-file-pdf-o\" style='color: red;font-size: ".$size."'></i>";
+            $icon = "<i class=\"" . $ico . " fa-file-pdf-o\" style='color: red;font-size: " . $size . "'></i>";
         }
         if ($ext == '.png' or $ext == '.jpg' or $ext == '.jpeg' or $ext == '.gif') {
-            $icon = "<img src='$path' style='width: auto;height: ".$size."' alt=''>";
+            $icon = "<img src='$path' style='width: auto;height: " . $size . "' alt=''>";
         }
         if ($ext == ".xls" or $ext == '.xlsx') {
-            $icon = "<i class=\"".$ico." fa-file-excel-o\" style='color: green;font-size: ".$size."'></i>";
+            $icon = "<i class=\"" . $ico . " fa-file-excel-o\" style='color: green;font-size: " . $size . "'></i>";
         }
         if ($ext == ".ppt" or $ext == '.pptx' or $ext == '.pptm') {
-            $icon = "<i class=\"".$ico." fa-file-powerpoint-o\" style='color: #1066E7;font-size:".$size."'></i>";
+            $icon = "<i class=\"" . $ico . " fa-file-powerpoint-o\" style='color: #1066E7;font-size:" . $size . "'></i>";
         }
         if ($ext == ".doc" or $ext == '.docx') {
-            $icon = "<i class=\"".$ico." fa-file-word-o\" style='color: #0EA8DD;font-size: ".$size."'></i>";
+            $icon = "<i class=\"" . $ico . " fa-file-word-o\" style='color: #0EA8DD;font-size: " . $size . "'></i>";
         }
         if ($ext == ".zip" or $ext == '.rar') {
-            $icon = "<i class=\"".$ico." fa-file-zip-o\" style='color: #C8841D;font-size: ".$size."'></i>";
+            $icon = "<i class=\"" . $ico . " fa-file-zip-o\" style='color: #C8841D;font-size: " . $size . "'></i>";
         }
         if ($ext == ".txt" or $ext == '.rtf') {
-            $icon = "<i class=\"".$ico." fa-file-text-o\" style='color: #7573AA;font-size: ".$size."'></i>";
+            $icon = "<i class=\"" . $ico . " fa-file-text-o\" style='color: #7573AA;font-size: " . $size . "'></i>";
         }
         if ($ext == ".mp3" or $ext == '.wav') {
-            $icon = "<i class=\"".$ico." fa-file-audio-o\" style='color: #8EA657;font-size: ".$size."'></i>";
+            $icon = "<i class=\"" . $ico . " fa-file-audio-o\" style='color: #8EA657;font-size: " . $size . "'></i>";
         }
         if ($ext == ".mp4" or $ext == '.avi') {
-            $icon = "<i class=\"".$ico." fa-file-video-o\" style='color: #D30789;font-size: ".$size."'></i>";
+            $icon = "<i class=\"" . $ico . " fa-file-video-o\" style='color: #D30789;font-size: " . $size . "'></i>";
         }
         return $icon;
-
     }
 
     static function StringToSlug($string = "")
@@ -438,8 +441,8 @@ class Helper
             $separator = "-";
             $string = mb_strtolower($string, 'UTF-8');
             $string = str_replace(["/", "&", "?"], $separator, $string);
-            $string = preg_replace('/[^\p{L}\p{N}\s'.preg_quote($separator, '/').']+/u', '', $string);
-            $string = preg_replace('/['.preg_quote($separator, '/').'\s]+/u', $separator, $string);
+            $string = preg_replace('/[^\p{L}\p{N}\s' . preg_quote($separator, '/') . ']+/u', '', $string);
+            $string = preg_replace('/[' . preg_quote($separator, '/') . '\s]+/u', $separator, $string);
             return trim($string, $separator);
         } catch (\Exception $e) {
             return "";
@@ -485,9 +488,9 @@ class Helper
                     $i = 0;
                     foreach ($LanguagesList as $ActiveLanguage) {
                         if ($i == 0) {
-                            $query->where('seo_url_slug_'.$ActiveLanguage->code, $seo_url_slug);
+                            $query->where('seo_url_slug_' . $ActiveLanguage->code, $seo_url_slug);
                         } else {
-                            $query->orWhere('seo_url_slug_'.$ActiveLanguage->code, $seo_url_slug);
+                            $query->orWhere('seo_url_slug_' . $ActiveLanguage->code, $seo_url_slug);
                         }
                         $i++;
                     }
@@ -508,9 +511,9 @@ class Helper
                     $i = 0;
                     foreach ($LanguagesList as $ActiveLanguage) {
                         if ($i == 0) {
-                            $query->where('seo_url_slug_'.$ActiveLanguage->code, $seo_url_slug);
+                            $query->where('seo_url_slug_' . $ActiveLanguage->code, $seo_url_slug);
                         } else {
-                            $query->orWhere('seo_url_slug_'.$ActiveLanguage->code, $seo_url_slug);
+                            $query->orWhere('seo_url_slug_' . $ActiveLanguage->code, $seo_url_slug);
                         }
                         $i++;
                     }
@@ -531,9 +534,9 @@ class Helper
                     $i = 0;
                     foreach ($LanguagesList as $ActiveLanguage) {
                         if ($i == 0) {
-                            $query->where('seo_url_slug_'.$ActiveLanguage->code, $seo_url_slug);
+                            $query->where('seo_url_slug_' . $ActiveLanguage->code, $seo_url_slug);
                         } else {
-                            $query->orWhere('seo_url_slug_'.$ActiveLanguage->code, $seo_url_slug);
+                            $query->orWhere('seo_url_slug_' . $ActiveLanguage->code, $seo_url_slug);
                         }
                         $i++;
                     }
@@ -556,9 +559,9 @@ class Helper
         if ($Check_SEO_st) {
             return $seo_url_slug;
         } else {
-            $url = preg_replace('/-'.$num.'$/', '', $url);
+            $url = preg_replace('/-' . $num . '$/', '', $url);
             $num++;
-            $url = $url."-".$num;
+            $url = $url . "-" . $num;
             return Helper::URLSlug($url, $type, $id, $num);
         }
     }
@@ -600,9 +603,9 @@ class Helper
             $language_title = "<span class='label light text-dark lang-label'>";
             if (!empty($Language)) {
                 if ($Language->icon != "") {
-                    $language_title .= "<img src=\"".asset('assets/dashboard/images/flags/'.$Language->icon.'.svg')."\" alt=\"\">";
+                    $language_title .= "<img src=\"" . asset('assets/dashboard/images/flags/' . $Language->icon . '.svg') . "\" alt=\"\">";
                 }
-                $language_title .= " <small>".$Language->title."</small></span>";
+                $language_title .= " <small>" . $Language->title . "</small></span>";
             }
             return $language_title;
         }
@@ -610,7 +613,7 @@ class Helper
 
     static function languageURL($lang_code, $page_type = "", $page_id = 0)
     {
-        $lang_url = URL::to('lang/'.$lang_code);
+        $lang_url = URL::to('lang/' . $lang_code);
         if (@$page_type == "section" && @$page_id > 0) {
             $lang_url = Helper::sectionURL(@$page_id, $lang_code);
         } elseif (@$page_type == "category" && @$page_id > 0) {
@@ -669,7 +672,7 @@ class Helper
             if ($lang == "") {
                 $lang = @Helper::currentLanguage()->code;
             }
-            $title_var = "title_".$lang;
+            $title_var = "title_" . $lang;
             if (empty($WebmasterSection)) {
                 $_Loader_WebmasterSections = Cache::remember('_Loader_WebmasterSections', 60 * 24, function () {
                     return WebmasterSection::all();
@@ -679,22 +682,21 @@ class Helper
                 });
             }
             if (!empty($WebmasterSection)) {
-                if ($WebmasterSection->{'seo_url_slug_'.$lang} != "") {
-                    $slug = $WebmasterSection->{'seo_url_slug_'.$lang};
+                if ($WebmasterSection->{'seo_url_slug_' . $lang} != "") {
+                    $slug = $WebmasterSection->{'seo_url_slug_' . $lang};
                 } else {
-                    $slug = $WebmasterSection->{'seo_url_slug_'.config('smartend.default_language')};
+                    $slug = $WebmasterSection->{'seo_url_slug_' . config('smartend.default_language')};
                 }
                 if ($slug == "") {
                     $slug = Str::slug($WebmasterSection->$title_var, '-');
                 }
                 if ($lang != config('smartend.default_language')) {
-                    $section_url = url($lang."/".$slug);
+                    $section_url = url($lang . "/" . $slug);
                 } else {
                     $section_url = url($slug);
                 }
             }
         } catch (\Exception $e) {
-
         }
         return $section_url;
     }
@@ -706,15 +708,15 @@ class Helper
             if ($lang == "") {
                 $lang = @Helper::currentLanguage()->code;
             }
-            $title_var = "title_".$lang;
+            $title_var = "title_" . $lang;
             if (empty($Category)) {
                 $Category = Section::find($id);
             }
             if (!empty($Category)) {
-                if ($Category->{'seo_url_slug_'.$lang} != "") {
-                    $cat_slug = $Category->{'seo_url_slug_'.$lang};
+                if ($Category->{'seo_url_slug_' . $lang} != "") {
+                    $cat_slug = $Category->{'seo_url_slug_' . $lang};
                 } else {
-                    $cat_slug = $Category->{'seo_url_slug_'.config('smartend.default_language')};
+                    $cat_slug = $Category->{'seo_url_slug_' . config('smartend.default_language')};
                 }
                 if ($cat_slug == "") {
                     $cat_slug = Str::slug($Category->$title_var, '-');
@@ -723,10 +725,10 @@ class Helper
                 $WebmasterSection_slug = "NULL";
                 $WebmasterSection = $Category->WebmasterSection;
                 if (!empty($WebmasterSection)) {
-                    if ($WebmasterSection->{'seo_url_slug_'.$lang} != "") {
-                        $WebmasterSection_slug = $WebmasterSection->{'seo_url_slug_'.$lang};
+                    if ($WebmasterSection->{'seo_url_slug_' . $lang} != "") {
+                        $WebmasterSection_slug = $WebmasterSection->{'seo_url_slug_' . $lang};
                     } else {
-                        $WebmasterSection_slug = $WebmasterSection->{'seo_url_slug_'.config('smartend.default_language')};
+                        $WebmasterSection_slug = $WebmasterSection->{'seo_url_slug_' . config('smartend.default_language')};
                     }
                     if ($WebmasterSection_slug == "") {
                         $WebmasterSection_slug = Str::slug($WebmasterSection->$title_var, '-');
@@ -735,10 +737,10 @@ class Helper
 
                 $fatherSection2 = @$Category->fatherSection;
                 if (!empty($fatherSection2)) {
-                    if ($fatherSection2->{'seo_url_slug_'.$lang} != "") {
-                        $cat2_slug = $fatherSection2->{'seo_url_slug_'.$lang};
+                    if ($fatherSection2->{'seo_url_slug_' . $lang} != "") {
+                        $cat2_slug = $fatherSection2->{'seo_url_slug_' . $lang};
                     } else {
-                        $cat2_slug = $fatherSection2->{'seo_url_slug_'.config('smartend.default_language')};
+                        $cat2_slug = $fatherSection2->{'seo_url_slug_' . config('smartend.default_language')};
                     }
                     if ($cat2_slug == "") {
                         $cat2_slug = Str::slug($fatherSection2->$title_var, '-');
@@ -747,39 +749,37 @@ class Helper
                     $fatherSection1 = @$fatherSection2->fatherSection;
                     if (!empty($fatherSection1)) {
                         // is level 3
-                        if ($fatherSection1->{'seo_url_slug_'.$lang} != "") {
-                            $cat1_slug = $fatherSection1->{'seo_url_slug_'.$lang};
+                        if ($fatherSection1->{'seo_url_slug_' . $lang} != "") {
+                            $cat1_slug = $fatherSection1->{'seo_url_slug_' . $lang};
                         } else {
-                            $cat1_slug = $fatherSection1->{'seo_url_slug_'.config('smartend.default_language')};
+                            $cat1_slug = $fatherSection1->{'seo_url_slug_' . config('smartend.default_language')};
                         }
                         if ($cat1_slug == "") {
                             $cat1_slug = Str::slug($fatherSection1->$title_var, '-');
                         }
                         if ($lang != config('smartend.default_language')) {
-                            $category_url = url($lang."/".$WebmasterSection_slug."/".$cat1_slug."/".$cat2_slug.((@$WebmasterSection->type == 9) ? "#" : "/").$cat_slug);
+                            $category_url = url($lang . "/" . $WebmasterSection_slug . "/" . $cat1_slug . "/" . $cat2_slug . ((@$WebmasterSection->type == 9) ? "#" : "/") . $cat_slug);
                         } else {
-                            $category_url = url($WebmasterSection_slug."/".$cat1_slug."/".$cat2_slug.((@$WebmasterSection->type == 9) ? "#" : "/").$cat_slug);
+                            $category_url = url($WebmasterSection_slug . "/" . $cat1_slug . "/" . $cat2_slug . ((@$WebmasterSection->type == 9) ? "#" : "/") . $cat_slug);
                         }
                     } else {
                         // is level 2
                         if ($lang != config('smartend.default_language')) {
-                            $category_url = url($lang."/".$WebmasterSection_slug."/".$cat2_slug.((@$WebmasterSection->type == 9) ? "#" : "/").$cat_slug);
+                            $category_url = url($lang . "/" . $WebmasterSection_slug . "/" . $cat2_slug . ((@$WebmasterSection->type == 9) ? "#" : "/") . $cat_slug);
                         } else {
-                            $category_url = url($WebmasterSection_slug."/".$cat2_slug.((@$WebmasterSection->type == 9) ? "#" : "/").$cat_slug);
+                            $category_url = url($WebmasterSection_slug . "/" . $cat2_slug . ((@$WebmasterSection->type == 9) ? "#" : "/") . $cat_slug);
                         }
                     }
                 } else {
                     // is level 1
                     if ($lang != config('smartend.default_language')) {
-                        $category_url = url($lang."/".$WebmasterSection_slug.((@$WebmasterSection->type == 9) ? "#" : "/").$cat_slug);
+                        $category_url = url($lang . "/" . $WebmasterSection_slug . ((@$WebmasterSection->type == 9) ? "#" : "/") . $cat_slug);
                     } else {
-                        $category_url = url($WebmasterSection_slug.((@$WebmasterSection->type == 9) ? "#" : "/").$cat_slug);
+                        $category_url = url($WebmasterSection_slug . ((@$WebmasterSection->type == 9) ? "#" : "/") . $cat_slug);
                     }
                 }
             }
-
         } catch (\Exception $e) {
-
         }
         return $category_url;
     }
@@ -791,7 +791,7 @@ class Helper
             if ($lang == "") {
                 $lang = @Helper::currentLanguage()->code;
             }
-            $title_var = "title_".$lang;
+            $title_var = "title_" . $lang;
             if (empty($Topic)) {
                 $Topic = Topic::find($id);
             }
@@ -806,10 +806,10 @@ class Helper
                     }
                 }
 
-                if ($Topic->{'seo_url_slug_'.$lang} != "") {
-                    $topic_slug = $Topic->{'seo_url_slug_'.$lang};
+                if ($Topic->{'seo_url_slug_' . $lang} != "") {
+                    $topic_slug = $Topic->{'seo_url_slug_' . $lang};
                 } else {
-                    $topic_slug = $Topic->{'seo_url_slug_'.config('smartend.default_language')};
+                    $topic_slug = $Topic->{'seo_url_slug_' . config('smartend.default_language')};
                 }
                 if ($topic_slug == "") {
                     $topic_slug = Str::slug($Topic->$title_var, '-');
@@ -819,7 +819,7 @@ class Helper
 
                 if ($Topic->webmaster_id == 1 || @$WebmasterSection->type == 10) {
                     if ($lang != config('smartend.default_language')) {
-                        $topic_url = url($lang."/".$topic_slug);
+                        $topic_url = url($lang . "/" . $topic_slug);
                     } else {
                         $topic_url = url($topic_slug);
                     }
@@ -827,10 +827,10 @@ class Helper
                 }
 
                 if (!empty($WebmasterSection)) {
-                    if ($WebmasterSection->{'seo_url_slug_'.$lang} != "") {
-                        $WebmasterSection_slug = $WebmasterSection->{'seo_url_slug_'.$lang};
+                    if ($WebmasterSection->{'seo_url_slug_' . $lang} != "") {
+                        $WebmasterSection_slug = $WebmasterSection->{'seo_url_slug_' . $lang};
                     } else {
-                        $WebmasterSection_slug = $WebmasterSection->{'seo_url_slug_'.config('smartend.default_language')};
+                        $WebmasterSection_slug = $WebmasterSection->{'seo_url_slug_' . config('smartend.default_language')};
                     }
                     if ($WebmasterSection_slug == "") {
                         $WebmasterSection_slug = Str::slug($WebmasterSection->$title_var, '-');
@@ -844,10 +844,10 @@ class Helper
                 }
 
                 if (!empty($Category)) {
-                    if ($Category->{'seo_url_slug_'.$lang} != "") {
-                        $cat_slug = $Category->{'seo_url_slug_'.$lang};
+                    if ($Category->{'seo_url_slug_' . $lang} != "") {
+                        $cat_slug = $Category->{'seo_url_slug_' . $lang};
                     } else {
-                        $cat_slug = $Category->{'seo_url_slug_'.config('smartend.default_language')};
+                        $cat_slug = $Category->{'seo_url_slug_' . config('smartend.default_language')};
                     }
                     if ($cat_slug == "") {
                         $cat_slug = Str::slug($Category->$title_var, '-');
@@ -855,10 +855,10 @@ class Helper
 
                     $fatherSection2 = @$Category->fatherSection;
                     if (!empty($fatherSection2)) {
-                        if ($fatherSection2->{'seo_url_slug_'.$lang} != "") {
-                            $cat2_slug = $fatherSection2->{'seo_url_slug_'.$lang};
+                        if ($fatherSection2->{'seo_url_slug_' . $lang} != "") {
+                            $cat2_slug = $fatherSection2->{'seo_url_slug_' . $lang};
                         } else {
-                            $cat2_slug = $fatherSection2->{'seo_url_slug_'.config('smartend.default_language')};
+                            $cat2_slug = $fatherSection2->{'seo_url_slug_' . config('smartend.default_language')};
                         }
                         if ($cat2_slug == "") {
                             $cat2_slug = Str::slug($fatherSection2->$title_var, '-');
@@ -867,40 +867,40 @@ class Helper
                         $fatherSection1 = @$fatherSection2->fatherSection;
                         if (!empty($fatherSection1)) {
                             // is level 3
-                            if ($fatherSection1->{'seo_url_slug_'.$lang} != "") {
-                                $cat1_slug = $fatherSection1->{'seo_url_slug_'.$lang};
+                            if ($fatherSection1->{'seo_url_slug_' . $lang} != "") {
+                                $cat1_slug = $fatherSection1->{'seo_url_slug_' . $lang};
                             } else {
-                                $cat1_slug = $fatherSection1->{'seo_url_slug_'.config('smartend.default_language')};
+                                $cat1_slug = $fatherSection1->{'seo_url_slug_' . config('smartend.default_language')};
                             }
                             if ($cat1_slug == "") {
                                 $cat1_slug = Str::slug($fatherSection1->$title_var, '-');
                             }
                             if ($lang != config('smartend.default_language')) {
                                 if (@$WebmasterSection->type == 9) {
-                                    $topic_url = url($lang."/".$WebmasterSection_slug."#".$topic_slug);
+                                    $topic_url = url($lang . "/" . $WebmasterSection_slug . "#" . $topic_slug);
                                 } else {
-                                    $topic_url = url($lang."/".$WebmasterSection_slug."/".$cat1_slug."/".$cat2_slug."/".$cat_slug."/".$topic_slug);
+                                    $topic_url = url($lang . "/" . $WebmasterSection_slug . "/" . $cat1_slug . "/" . $cat2_slug . "/" . $cat_slug . "/" . $topic_slug);
                                 }
                             } else {
                                 if (@$WebmasterSection->type == 9) {
-                                    $topic_url = url($WebmasterSection_slug."#".$topic_slug);
+                                    $topic_url = url($WebmasterSection_slug . "#" . $topic_slug);
                                 } else {
-                                    $topic_url = url($WebmasterSection_slug."/".$cat1_slug."/".$cat2_slug."/".$cat_slug."/".$topic_slug);
+                                    $topic_url = url($WebmasterSection_slug . "/" . $cat1_slug . "/" . $cat2_slug . "/" . $cat_slug . "/" . $topic_slug);
                                 }
                             }
                         } else {
                             // is level 2
                             if ($lang != config('smartend.default_language')) {
                                 if (@$WebmasterSection->type == 9) {
-                                    $topic_url = url($lang."/".$WebmasterSection_slug."#".$topic_slug);
+                                    $topic_url = url($lang . "/" . $WebmasterSection_slug . "#" . $topic_slug);
                                 } else {
-                                    $topic_url = url($lang."/".$WebmasterSection_slug."/".$cat2_slug."/".$cat_slug."/".$topic_slug);
+                                    $topic_url = url($lang . "/" . $WebmasterSection_slug . "/" . $cat2_slug . "/" . $cat_slug . "/" . $topic_slug);
                                 }
                             } else {
                                 if (@$WebmasterSection->type == 9) {
-                                    $topic_url = url($WebmasterSection_slug."#".$topic_slug);
+                                    $topic_url = url($WebmasterSection_slug . "#" . $topic_slug);
                                 } else {
-                                    $topic_url = url($WebmasterSection_slug."/".$cat2_slug."/".$cat_slug."/".$topic_slug);
+                                    $topic_url = url($WebmasterSection_slug . "/" . $cat2_slug . "/" . $cat_slug . "/" . $topic_slug);
                                 }
                             }
                         }
@@ -908,28 +908,27 @@ class Helper
                         // is level 1
                         if ($lang != config('smartend.default_language')) {
                             if (@$WebmasterSection->type == 9) {
-                                $topic_url = url($lang."/".$WebmasterSection_slug."#".$topic_slug);
+                                $topic_url = url($lang . "/" . $WebmasterSection_slug . "#" . $topic_slug);
                             } else {
-                                $topic_url = url($lang."/".$WebmasterSection_slug."/".$cat_slug."/".$topic_slug);
+                                $topic_url = url($lang . "/" . $WebmasterSection_slug . "/" . $cat_slug . "/" . $topic_slug);
                             }
                         } else {
                             if (@$WebmasterSection->type == 9) {
-                                $topic_url = url($WebmasterSection_slug."#".$topic_slug);
+                                $topic_url = url($WebmasterSection_slug . "#" . $topic_slug);
                             } else {
-                                $topic_url = url($WebmasterSection_slug."/".$cat_slug."/".$topic_slug);
+                                $topic_url = url($WebmasterSection_slug . "/" . $cat_slug . "/" . $topic_slug);
                             }
                         }
                     }
                 } else {
                     if ($lang != config('smartend.default_language')) {
-                        $topic_url = url($lang."/".$WebmasterSection_slug.((@$WebmasterSection->type == 9) ? "#" : "/").$topic_slug);
+                        $topic_url = url($lang . "/" . $WebmasterSection_slug . ((@$WebmasterSection->type == 9) ? "#" : "/") . $topic_slug);
                     } else {
-                        $topic_url = url($WebmasterSection_slug.((@$WebmasterSection->type == 9) ? "#" : "/").$topic_slug);
+                        $topic_url = url($WebmasterSection_slug . ((@$WebmasterSection->type == 9) ? "#" : "/") . $topic_slug);
                     }
                 }
             }
         } catch (\Exception $e) {
-
         }
         return $topic_url;
     }
@@ -950,10 +949,9 @@ class Helper
                 if ($slug == "") {
                     $slug = Str::slug($DBTag->title, '-');
                 }
-                $tag_url = route("tag", $slug)."?lang=".$lang;
+                $tag_url = route("tag", $slug) . "?lang=" . $lang;
             }
         } catch (\Exception $e) {
-
         }
         return $tag_url;
     }
@@ -973,7 +971,7 @@ class Helper
             try {
                 $format = config('smartend.date_format');
                 if ($withTime) {
-                    return Carbon::createFromFormat($format." h:i A", $date)->format('Y-m-d H:i:s');
+                    return Carbon::createFromFormat($format . " h:i A", $date)->format('Y-m-d H:i:s');
                 } else {
                     return Carbon::createFromFormat($format, $date)->format('Y-m-d');
                 }
@@ -1020,18 +1018,26 @@ class Helper
     static function ParseLinks($str)
     {
         $target = ' target="_blank"';
-        $str = preg_replace('@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.~]*(\?\S+)?)?)*)@',
-            '<a href="$1" '.$target.'>$1</a>', $str);
-        $str = preg_replace('/<a\s[^>]*href\s*=\s*"((?!https?:\/\/)[^"]*)"[^>]*>/i', '<a href="http://$1" '.$target.'>',
-            $str);
+        $str = preg_replace(
+            '@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.~]*(\?\S+)?)?)*)@',
+            '<a href="$1" ' . $target . '>$1</a>',
+            $str
+        );
+        $str = preg_replace(
+            '/<a\s[^>]*href\s*=\s*"((?!https?:\/\/)[^"]*)"[^>]*>/i',
+            '<a href="http://$1" ' . $target . '>',
+            $str
+        );
         return $str;
     }
 
     static function Topic($id)
     {
         return Topic::where("status", 1)->where(function ($query) {
-            $query->where([['expire_date', '>=', date("Y-m-d")], ['expire_date', '<>', null]])->orWhere('expire_date',
-                null);
+            $query->where([['expire_date', '>=', date("Y-m-d")], ['expire_date', '<>', null]])->orWhere(
+                'expire_date',
+                null
+            );
         })->find($id);
     }
 
@@ -1040,7 +1046,8 @@ class Helper
         try {
             $Topics = Topic::where("status", 1)->where("webmaster_id", $SectionId)->where(function ($query) {
                 $query->where([
-                    ['expire_date', '>=', date("Y-m-d")], ['expire_date', '<>', null]
+                    ['expire_date', '>=', date("Y-m-d")],
+                    ['expire_date', '<>', null]
                 ])->orWhere('expire_date', null);
             });
             if ($CatIds == "" || $CatIds == "0") {
@@ -1049,8 +1056,10 @@ class Helper
                 $CatIds = explode(",", $CatIds);
             }
             if (count($CatIds) > 0) {
-                $Topics = $Topics->whereIn("id",
-                    TopicCategory::whereIn('section_id', $CatIds)->pluck("topic_id")->toarray());
+                $Topics = $Topics->whereIn(
+                    "id",
+                    TopicCategory::whereIn('section_id', $CatIds)->pluck("topic_id")->toarray()
+                );
             }
             if ($random) {
                 $Topics = $Topics->inRandomOrder();
@@ -1070,8 +1079,10 @@ class Helper
                         break;
                 }
             } else {
-                $Topics = $Topics->orderby('featured', 'desc')->orderby('date',
-                    config('smartend.frontend_topics_order'))->orderby('id', config('smartend.frontend_topics_order'));
+                $Topics = $Topics->orderby('featured', 'desc')->orderby(
+                    'date',
+                    config('smartend.frontend_topics_order')
+                )->orderby('id', config('smartend.frontend_topics_order'));
             }
             if ($limit > 0) {
                 $Topics = $Topics->limit($limit);
@@ -1090,7 +1101,7 @@ class Helper
         $p1 = @hexdec(@$parts[0]);
         $p2 = @hexdec(@$parts[1]);
         $p3 = @hexdec(@$parts[2]);
-        return "rgba(".$p1.",".$p2.",".$p3.",".$opacity.")";
+        return "rgba(" . $p1 . "," . $p2 . "," . $p3 . "," . $opacity . ")";
     }
 
     static function colorHexToDarken($color, $darker = 2)
@@ -1099,7 +1110,7 @@ class Helper
         $hash = (strpos($color, '#') !== false) ? '#' : '';
         $color = (strlen($color) == 7) ? str_replace('#', '', $color) : ((strlen($color) == 6) ? $color : false);
         if (strlen($color) != 6) {
-            return $hash.'000000';
+            return $hash . '000000';
         }
         $darker = ($darker > 1) ? $darker : 1;
 
@@ -1109,7 +1120,7 @@ class Helper
         $G = sprintf("%02X", floor(hexdec($G16) / $darker));
         $B = sprintf("%02X", floor(hexdec($B16) / $darker));
 
-        return $hash.$R.$G.$B;
+        return $hash . $R . $G . $B;
     }
 
     static function imageResize($file_path, $width = 0, $height = 0)
@@ -1136,7 +1147,6 @@ class Helper
                 }
             }
         } catch (\Exception $e) {
-
         }
     }
 
@@ -1153,7 +1163,6 @@ class Helper
                 }
             }
         } catch (\Exception $e) {
-
         }
     }
 
@@ -1174,7 +1183,6 @@ class Helper
                 }
                 return 1;
             } catch (\Exception $e) {
-
             }
         }
         return 0;
@@ -1240,28 +1248,29 @@ class Helper
                     "custom" => 0,
                 ];
             }
-            $cf_title_var = "title_".@Helper::currentLanguage()->code;
-            $cf_title_var2 = "title_".config('smartend.default_language');
+            $cf_title_var = "title_" . @Helper::currentLanguage()->code;
+            $cf_title_var2 = "title_" . config('smartend.default_language');
             foreach ($WebmasterSection->customFields->whereNotIn("type", [99]) as $customField) {
                 $view_permission_groups = [];
                 if ($customField->view_permission_groups != "") {
                     $view_permission_groups = explode(",", $customField->view_permission_groups);
                 }
-                if (in_array(Auth::user()->permissions_id, $view_permission_groups) || in_array(0,
-                        $view_permission_groups) || $customField->view_permission_groups == "") {
+                if (in_array(Auth::user()->permissions_id, $view_permission_groups) || in_array(
+                    0,
+                    $view_permission_groups
+                ) || $customField->view_permission_groups == "") {
                     if ($customField->$cf_title_var != "") {
                         $cf_title = $customField->$cf_title_var;
                     } else {
                         $cf_title = $customField->$cf_title_var2;
                     }
 
-                    $COLS["col_custom_".$customField->id] = [
+                    $COLS["col_custom_" . $customField->id] = [
                         "title" => $cf_title,
                         "sortable" => 0,
                         "default" => ($customField->in_table) ? 1 : 0,
                         "custom" => 1,
                     ];
-
                 }
             }
 
@@ -1308,11 +1317,10 @@ class Helper
             try {
                 $table_columns = json_decode($User->table_columns, true);
             } catch (\Exception $e) {
-
             }
             if (!empty($table_columns)) {
-                if (!empty(@$table_columns["sec_".$webmaster_id])) {
-                    return @$table_columns["sec_".$webmaster_id];
+                if (!empty(@$table_columns["sec_" . $webmaster_id])) {
+                    return @$table_columns["sec_" . $webmaster_id];
                 }
             }
         }
@@ -1355,9 +1363,9 @@ class Helper
         $Data = [];
         $CustomField = WebmasterSectionField::find($custom_field_id);
         if (!empty($CustomField)) {
-            $cf_title_var = "title_".@Helper::currentLanguage()->code;
-            $cf_details_var = "details_".@Helper::currentLanguage()->code;
-            $cf_details_var2 = "details_".config('smartend.default_language');
+            $cf_title_var = "title_" . @Helper::currentLanguage()->code;
+            $cf_details_var = "details_" . @Helper::currentLanguage()->code;
+            $cf_details_var2 = "details_" . config('smartend.default_language');
             if ($CustomField->$cf_details_var != "") {
                 $cf_details = $CustomField->$cf_details_var;
             } else {
@@ -1367,11 +1375,16 @@ class Helper
             $line_num = 1;
             foreach ($cf_details_lines as $cf_details_line) {
                 if ($CustomField->type == 6) {
-                    $tf_ids = TopicField::select("topic_id")->where("field_id", $CustomField->id)->where("field_value",
-                        $line_num);
+                    $tf_ids = TopicField::select("topic_id")->where("field_id", $CustomField->id)->where(
+                        "field_value",
+                        $line_num
+                    );
                 } else {
-                    $tf_ids = TopicField::select("topic_id")->where("field_id", $CustomField->id)->where("field_value",
-                        'like', '%'.$line_num.'%');
+                    $tf_ids = TopicField::select("topic_id")->where("field_id", $CustomField->id)->where(
+                        "field_value",
+                        'like',
+                        '%' . $line_num . '%'
+                    );
                 }
                 $Topics_count = Topic::where('webmaster_id', '=', $module_id)->wherein('id', $tf_ids)->count();
                 $Data[] = [
@@ -1392,6 +1405,3 @@ class Helper
         return $Data;
     }
 }
-
-?>
-                              
