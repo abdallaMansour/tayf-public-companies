@@ -25,7 +25,7 @@
                 @endif
 
                 <form name="reset" method="POST"
-                      action="{{ url('/'.config('smartend.backend_path').'/password/email') }}">
+                      action="{{ url('/'.getBackendPath().'/password/email') }}">
                     {{ csrf_field() }}
                     <div class="md-form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                         <input type="email" name="email" value="{{ old('email') }}" class="md-input" required>
@@ -45,7 +45,7 @@
 
                 <p id="alerts-container"></p>
                 <div class="p-v-lg text-center">{{ __('backend.returnTo') }} <a
-                        href="{{ url('/'.config('smartend.backend_path').'/login') }}"
+                        href="{{ url('/'.getBackendPath().'/login') }}"
                         class="text-primary _600">{{ __('backend.signIn') }}</a>
                 </div>
             </div>

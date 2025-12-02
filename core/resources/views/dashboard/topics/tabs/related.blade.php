@@ -245,7 +245,7 @@
                 var fid = $(this).val();
                 $(document).ready(function () {
                     $.ajax({
-                        url: '<?php echo url(config('smartend.backend_path')."/relatedLoad"); ?>/' + fid,
+                        url: '<?php echo url(getBackendPath()."/relatedLoad"); ?>/' + fid,
                         data: {},
                         success: function (data) {
                             $('#r_topics').html(data);

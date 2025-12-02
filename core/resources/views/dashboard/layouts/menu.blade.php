@@ -2,9 +2,9 @@
 // Current Full URL
 $fullPagePath = Request::url();
 // Char Count of Backend folder Plus 1
-$envAdminCharCount = strlen(config('smartend.backend_path')) + 2;
+$envAdminCharCount = strlen(getBackendPath()) + 2;
 // URL after Root Path EX: admin/home
-$urlAfterRoot = substr($fullPagePath, strpos($fullPagePath, "/".config('smartend.backend_path')) + $envAdminCharCount);
+$urlAfterRoot = substr($fullPagePath, strpos($fullPagePath, "/".getBackendPath()) + $envAdminCharCount);
 $mnu_title_var = "title_".@Helper::currentLanguage()->code;
 $mnu_title_var2 = "title_".config('smartend.default_language');
 ?>

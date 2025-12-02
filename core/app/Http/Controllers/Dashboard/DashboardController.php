@@ -361,8 +361,8 @@ class DashboardController extends Controller
     public function cache_clear()
     {
         // clear cache & views cache
-        Artisan::call('cache:clear');
-        Artisan::call('view:clear');
+        Artisan::call('optimize:clear');
+        // Artisan::call('view:clear');
 
         // delete cache files manually
         if (\File::exists(base_path("bootstrap/cache/config.php"))) {
@@ -387,7 +387,6 @@ class DashboardController extends Controller
         } catch (\Exception $exception) {
 
         }
-
 
         return redirect()->action([DashboardController::class, 'cache_cleared']);
     }

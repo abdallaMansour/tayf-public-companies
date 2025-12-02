@@ -14,7 +14,7 @@
             <div class="m-y text-muted text-center">
                 {{ __('backend.resetPassword') }}
             </div>
-            <form name="reset" method="POST" action="{{ url('/'.config('smartend.backend_path').'/password/reset') }}">
+            <form name="reset" method="POST" action="{{ url('/'.getBackendPath().'/password/reset') }}">
                 {{ csrf_field() }}
 
                 @if ($errors->has('email'))

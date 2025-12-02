@@ -686,6 +686,7 @@ return array(
     'activateNow' => 'تفعيل الآن',
     'licenseNow' => 'ترخيص الآن',
     'unlicensed' => 'نسخة غير مرخصة !',
+    'licenseExpiry' => 'انتهاء الترخيص',
     'licenseSuccess' => 'تم تفعيل الترخيص بنجاح',
     'websiteUptoDate' => 'هذا الموقع محدث بالفعل لأخر إصدار.',
     'updateInProgress' => 'جاري تحديث النظام برجاء الإنتظار وعدم إغلاق الصفحة',

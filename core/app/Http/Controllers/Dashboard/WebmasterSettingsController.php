@@ -219,7 +219,8 @@ class WebmasterSettingsController extends Controller
             $WebmasterSetting->updated_by = Auth::user()->id;
             $WebmasterSetting->save();
 
-            $OLD_BACKEND_PATH = config('smartend.backend_path');
+            // $OLD_BACKEND_PATH = config('smartend.backend_path');
+            $OLD_BACKEND_PATH = getBackendPath();
             if ($request->backend_path == "") {
                 $request->backend_path = "admin";
             }

@@ -22,7 +22,7 @@ use App\Http\Controllers\Dashboard\TagController;
 use App\Http\Controllers\Dashboard\PopupController;
 use Illuminate\Support\Facades\Route;
 
-Route::Group(['prefix' => config('smartend.backend_path'), 'middleware' => ['auth', 'LanguageSwitcher']], function () {
+Route::Group(['prefix' => getBackendPath(), 'middleware' => ['auth', 'LanguageSwitcher', 'is_valid_tenant']], function () {
 // Admin Home
     Route::get('/', [DashboardController::class, 'index'])->name('adminHome');
 //Search

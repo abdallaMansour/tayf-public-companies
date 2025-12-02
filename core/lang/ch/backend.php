@@ -690,6 +690,7 @@ return array(
     'activateNow' => '立即激活',
     'licenseNow' => '立即授权',
     'unlicensed' => '未授权版本！',
+    'licenseExpiry' => '许可证到期',
     'licenseSuccess' => '许可证已验证成功',
     'websiteUptoDate' => '您的网站是最新的，并且具有最新版本。',
     'updateInProgress' => '更新正在进行中，请稍候',

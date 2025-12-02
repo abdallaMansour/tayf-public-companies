@@ -11,7 +11,7 @@
             <div class="pull-right text-muted" dir="ltr">
                 {{ config('app.url') }}/
             </div>
-            <input type="text" name="backend_path" id="backend_path" value="{{ config('smartend.backend_path') }}" placeholder="{{ config('app.url').'/admin' }}" class="form-control backend_path" dir="ltr"/>
+            <input type="text" name="backend_path" id="backend_path" value="{{ getBackendPath() }}" placeholder="{{ config('app.url').'/admin' }}" class="form-control backend_path" dir="ltr"/>
         </div>
         <div class="form-group">
             <label>{{ __('backend.permissionForNewUsers') }} : </label>

@@ -60,7 +60,8 @@
                                                     language="{{ $language }}"
                                                     group="{{ $group }}"
                                                     translation-key="{{ $key }}"
-                                                    route="{{ config('translation.ui_url') }}">
+                                                    {{-- route="{{ config('translation.ui_url') }}"> --}}
+                                                    route="{{ getBackendPath().'/webmaster/translations' }}">
                                                 </translation-input>
                                             </td>
                                         </tr>

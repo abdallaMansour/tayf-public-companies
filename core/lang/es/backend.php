@@ -686,6 +686,7 @@ return array(
     'activateNow' => 'Activar Ahora',
     'licenseNow' => 'Licenciar Ahora',
     'unlicensed' => '¡Versión sin licencia!',
+    'licenseExpiry' => 'Vencimiento de la licencia',
     'licenseSuccess' => 'La licencia ha sido verificada con éxito',
     'websiteUptoDate' => 'Tu sitio web está actualizado y tiene la última versión.',
     'updateInProgress' => 'Actualización en progreso, por favor espera',

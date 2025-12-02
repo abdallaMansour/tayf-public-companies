@@ -625,7 +625,7 @@
                                         </small>
                                     </button>
                                     <a class="btn btn-sm info " target="_blank"
-                                       href="{{ url(config('smartend.backend_path').'/webmaster/translations/'.$Language->code.'/translations') }}">
+                                       href="{{ url(getBackendPath().'/webmaster/translations/'.$Language->code.'/translations') }}">
                                         <i class="material-icons">&#xe8e2;</i> {{ __('backend.updateTranslation') }}
                                     </a>
                                 @endif

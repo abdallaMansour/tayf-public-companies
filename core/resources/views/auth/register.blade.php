@@ -57,7 +57,7 @@
             </form>
 
             <div class="p-v-lg text-center m-t-1">
-                <div>{{ __('backend.signedInToControl') }} <a href="{{ url('/'.config('smartend.backend_path').'/login') }}"
+                <div>{{ __('backend.signedInToControl') }} <a href="{{ url('/'.getBackendPath().'/login') }}"
                                                               class="text-primary _600">{{ __('backend.signIn') }}</a>
                 </div>
             </div>

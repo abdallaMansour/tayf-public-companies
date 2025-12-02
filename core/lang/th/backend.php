@@ -688,6 +688,7 @@ return array(
     'activateNow' => 'เปิดใช้งานตอนนี้',
     'licenseNow' => 'ให้ลิขสิทธิ์ตอนนี้',
     'unlicensed' => 'รุ่นที่ไม่มีลิขสิทธิ์!',
+    'licenseExpiry' => 'วันหมดอายุใบอนุญาต',
     'licenseSuccess' => 'ยืนยันลิขสิทธิ์เรียบร้อยแล้ว',
     'websiteUptoDate' => 'เว็บไซต์ของคุณเป็นเวอร์ชันล่าสุดแล้ว',
     'updateInProgress' => 'กำลังอัปเดต กรุณารอสักครู่',

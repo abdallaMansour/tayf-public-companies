@@ -15,7 +15,7 @@
                 <h5 class="text-muted m-b-0"><strong>{{ __('backend.signedInToControl') }}</strong></h5>
             </div>
             <div class="p-a-md">
-                <form name="form" method="POST" action="{{ url('/'.config('smartend.backend_path').'/login') }}"
+                <form name="form" method="POST" action="{{ url('/'.getBackendPath().'/login') }}"
                       onsubmit="document.getElementById('login_form_submit').disabled = true; return true;">
                     {{ csrf_field() }}
                     @if($errors ->any())
@@ -89,14 +89,14 @@
                 @endif
 
                 @if(Helper::GeneralWebmasterSettings("register_status"))
-                    <a href="{{ url('/'.config('smartend.backend_path').'/register') }}"
+                    <a href="{{ url('/'.getBackendPath().'/register') }}"
                        class="btn info btn-block text-left">
                         <i class="fa fa-user-plus"></i> {{ __('backend.createNewAccount') }}
                     </a>
                 @endif
                 @if(config('smartend.mail_driver') != "" && config('smartend.mail_username') !="" && config('smartend.mail_password'))
                     <div class="p-v-lg text-center">
-                        <div class="m-t"><a href="{{ url('/'.config('smartend.backend_path').'/password/reset') }}"
+                        <div class="m-t"><a href="{{ url('/'.getBackendPath().'/password/reset') }}"
                                             class="text-primary _600">{{ __('backend.forgotPassword') }}</a></div>
                     </div>
                 @endif

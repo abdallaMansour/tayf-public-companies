@@ -15,9 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+
+        // this way on get backend path is not working
+        $middleware->prepend(\App\Http\Middleware\IsValidTenant::class);
+
         $middleware->alias([
             'LanguageSwitcher' => \App\Http\Middleware\LanguageSwitcher::class,
+            'is_valid_tenant' => \App\Http\Middleware\IsValidTenant::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
