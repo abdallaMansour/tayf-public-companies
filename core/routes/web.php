@@ -40,7 +40,8 @@ Route::group(['prefix' => getTenantPrefix()], function () {
     // Social Auth
     Route::get('/oauth/{driver}', [SocialAuthController::class, 'redirectToProvider'])->name('social.oauth');
     Route::get('/oauth/{driver}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('social.callback');
-    Route::Group(['prefix' => getBackendPath()], function () {
+
+    Route::Group(['prefix' => 'admin'], function () {
         Auth::routes();
     });
 
