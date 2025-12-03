@@ -8,43 +8,45 @@
     @include('frontEnd.layouts.colors')
     @yield('headInclude')
     @stack('after-styles')
-    @if(Helper::GeneralSiteSettings("css")!="")
+    @if (Helper::GeneralSiteSettings('css') != '')
         <style type="text/css">
-            {!! Helper::GeneralSiteSettings("css") !!}
+            {!! Helper::GeneralSiteSettings('css') !!}
         </style>
     @endif
-    {!! Helper::GeneralSiteSettings("js") !!}
+    {!! Helper::GeneralSiteSettings('js') !!}
 </head>
 
-<body class="dir-{{ @Helper::currentLanguage()->direction }} lang-{{ @Helper::currentLanguage()->code }} {{ (!Helper::GeneralSiteSettings("style_change") && Helper::GeneralSiteSettings("style_type"))?"dark":"" }}">
+<body
+    class="dir-{{ @Helper::currentLanguage()->direction }} lang-{{ @Helper::currentLanguage()->code }} {{ !Helper::GeneralSiteSettings('style_change') && Helper::GeneralSiteSettings('style_type') ? 'dark' : '' }}">
 
-@if(!@$HideHeader)
-<!-- ======= Top Bar ======= -->
-@include('frontEnd.layouts.topbar')
+    @if (!@$HideHeader)
+        <!-- ======= Top Bar ======= -->
+        @include('frontEnd.layouts.topbar')
 
-<!-- ======= Header ======= -->
-@include('frontEnd.layouts.header')
-@endif
+        <!-- ======= Header ======= -->
+        @include('frontEnd.layouts.header')
+    @endif
 
-<!-- ======= Main contents ======= -->
-<main id="main" class="{{ (Helper::GeneralSiteSettings("style_header"))?"fixed-top-margin":"" }}">
-    @yield('content')
-</main>
-<!-- ======= Footer ======= -->
-@stack('before-footer')
+    <!-- ======= Main contents ======= -->
+    <main id="main" class="{{ Helper::GeneralSiteSettings('style_header') ? 'fixed-top-margin' : '' }}">
+        @yield('content')
+    </main>
+    <!-- ======= Footer ======= -->
+    @stack('before-footer')
 
-@if(!@$HideFooter)
-@include('frontEnd.layouts.footer')
-@endif
+    @if (!@$HideFooter)
+        @include('frontEnd.layouts.footer')
+    @endif
 
-@if(Helper::GeneralSiteSettings("style_preload"))
-    <div id="preloader"></div>
-@endif
-<!-- ======= JS Including ======= -->
-@stack('before-scripts')
-@include('frontEnd.layouts.foot')
-@yield('footInclude')
-@stack('after-scripts')
-{!! Helper::GeneralSiteSettings("body") !!}
+    @if (Helper::GeneralSiteSettings('style_preload'))
+        <div id="preloader"></div>
+    @endif
+    <!-- ======= JS Including ======= -->
+    @stack('before-scripts')
+    @include('frontEnd.layouts.foot')
+    @yield('footInclude')
+    @stack('after-scripts')
+    {!! Helper::GeneralSiteSettings('body') !!}
 </body>
+
 </html>

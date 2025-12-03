@@ -613,7 +613,8 @@ class Helper
 
     static function languageURL($lang_code, $page_type = "", $page_id = 0)
     {
-        $lang_url = URL::to('lang/' . $lang_code);
+        $lang_url = URL::to(getTenantPrefix() . '/lang/' . $lang_code);
+
         if (@$page_type == "section" && @$page_id > 0) {
             $lang_url = Helper::sectionURL(@$page_id, $lang_code);
         } elseif (@$page_type == "category" && @$page_id > 0) {

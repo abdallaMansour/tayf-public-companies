@@ -31,7 +31,7 @@ class WebmasterSettingsSeeder extends Seeder
         $settings->shop_status = false;
         $settings->shop_settings_status = false;
         $settings->default_currency_id = 0;
-        $settings->languages_by_default = "en";
+        $settings->languages_by_default = "ar";
 
         $settings->header_menu_id = "1";
         $settings->footer_menu_id = "2";

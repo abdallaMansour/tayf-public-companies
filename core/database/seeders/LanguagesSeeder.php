@@ -45,7 +45,7 @@ class LanguagesSeeder extends Seeder
         $Language->box_status = 1;
         $Language->left = "left";
         $Language->right = "right";
-        $Language->status = 1;
+        $Language->status = 0;
         $Language->created_by = 1;
         $Language->save();
 
@@ -57,7 +57,7 @@ class LanguagesSeeder extends Seeder
         $Language->box_status = 1;
         $Language->left = "left";
         $Language->right = "right";
-        $Language->status = 1;
+        $Language->status = 0;
         $Language->created_by = 1;
         $Language->save();
 
@@ -69,7 +69,7 @@ class LanguagesSeeder extends Seeder
         $Language->box_status = 1;
         $Language->left = "left";
         $Language->right = "right";
-        $Language->status = 1;
+        $Language->status = 0;
         $Language->created_by = 1;
         $Language->save();
 
@@ -81,7 +81,7 @@ class LanguagesSeeder extends Seeder
         $Language->box_status = 1;
         $Language->left = "left";
         $Language->right = "right";
-        $Language->status = 1;
+        $Language->status = 0;
         $Language->created_by = 1;
         $Language->save();
 
@@ -93,7 +93,7 @@ class LanguagesSeeder extends Seeder
         $Language->box_status = 1;
         $Language->left = "left";
         $Language->right = "right";
-        $Language->status = 1;
+        $Language->status = 0;
         $Language->created_by = 1;
         $Language->save();
 
@@ -105,7 +105,7 @@ class LanguagesSeeder extends Seeder
         $Language->box_status = 1;
         $Language->left = "left";
         $Language->right = "right";
-        $Language->status = 1;
+        $Language->status = 0;
         $Language->created_by = 1;
         $Language->save();
 
@@ -117,7 +117,7 @@ class LanguagesSeeder extends Seeder
         $Language->box_status = 1;
         $Language->left = "left";
         $Language->right = "right";
-        $Language->status = 1;
+        $Language->status = 0;
         $Language->created_by = 1;
         $Language->save();
 
@@ -129,7 +129,7 @@ class LanguagesSeeder extends Seeder
         $Language->box_status = 1;
         $Language->left = "left";
         $Language->right = "right";
-        $Language->status = 1;
+        $Language->status = 0;
         $Language->created_by = 1;
         $Language->save();
 
@@ -141,7 +141,7 @@ class LanguagesSeeder extends Seeder
         $Language->box_status = 1;
         $Language->left = "left";
         $Language->right = "right";
-        $Language->status = 1;
+        $Language->status = 0;
         $Language->created_by = 1;
         $Language->save();
     }
