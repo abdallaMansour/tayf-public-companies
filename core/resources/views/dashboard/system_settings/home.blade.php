@@ -28,11 +28,11 @@
                                     data-target="#tab-5" onclick="clicked_tab('frontSettingsTab')">
                                     &nbsp; {!! __('backend.frontSettings') !!}</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link block {{ Session::get('active_tab') == 'languageSettingsTab' ? 'active' : '' }}" href="#" data-toggle="tab" data-target="#tab-2"
                                     onclick="clicked_tab('languageSettingsTab')">
                                     &nbsp; {!! __('backend.languageSettings') !!}</a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a class="nav-link block {{ Session::get('active_tab') == 'fileSystemTab' ? 'active' : '' }}" href="#" data-toggle="tab" data-target="#tab-16"
                                     onclick="clicked_tab('fileSystemTab')">
