@@ -20,6 +20,7 @@ use App\Http\Controllers\Dashboard\MenusController;
 use App\Http\Controllers\Dashboard\FileManagerController;
 use App\Http\Controllers\Dashboard\TagController;
 use App\Http\Controllers\Dashboard\PopupController;
+use App\Http\Controllers\Dashboard\DomainRequestController;
 use Illuminate\Support\Facades\Route;
 
 Route::Group(['prefix' => 'admin', 'middleware' => ['auth', 'LanguageSwitcher', 'is_valid_tenant']], function () {
@@ -351,6 +352,13 @@ Route::Group(['prefix' => 'admin', 'middleware' => ['auth', 'LanguageSwitcher', 
 // File manager
     Route::get('file-manager', [FileManagerController::class, 'index'])->name('FileManager');
     Route::get('files-manager', [FileManagerController::class, 'manager'])->name('FilesManager');
+
+// Domain Requests
+    Route::get('/domain-requests', [DomainRequestController::class, 'index'])->name('domainRequests');
+    Route::get('/domain-requests/create', [DomainRequestController::class, 'create'])->name('domainRequestsCreate');
+    Route::post('/domain-requests/store', [DomainRequestController::class, 'store'])->name('domainRequestsStore');
+    Route::post('/domain-requests/search', [DomainRequestController::class, 'search'])->name('domainRequestsSearch');
+    Route::post('/domain-requests/updateAll', [DomainRequestController::class, 'updateAll'])->name('domainRequestsUpdateAll');
 
 // No Permission
     Route::get('/403', [DashboardController::class, 'page_403']);
