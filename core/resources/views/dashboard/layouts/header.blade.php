@@ -122,7 +122,7 @@
                 </form>
             @endif
 
-            @if (Helper::GeneralWebmasterSettings('license') && Helper::GeneralWebmasterSettings('purchase_code') != '')
+            {{-- @if (Helper::GeneralWebmasterSettings('license') && Helper::GeneralWebmasterSettings('purchase_code') != '') --}}
                 @if (@Auth::user()->permissionsGroup->add_status)
                     <ul class="nav navbar-nav">
                         <li class="nav-item dropdown pa-13">
@@ -318,7 +318,7 @@
                         });
                     </script>
                 @endpush
-            @else
+            {{-- @else
                 <ul class="nav navbar-nav">
                     <li class="nav-item">
                         <div class="pa-13">
@@ -327,7 +327,7 @@
                         </div>
                     </li>
                 </ul>
-            @endif
+            @endif --}}
         </div>
     </div>
 </div>

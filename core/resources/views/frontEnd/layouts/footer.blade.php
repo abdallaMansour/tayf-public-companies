@@ -117,19 +117,21 @@ if (!Helper::GeneralSiteSettings("style_subscribe")) {
             </div>
         </div>
     @endif
-    <div class="footer-bottom">
+    <div class="footer-bottom" style="background-color: #000;">
         <div class="container d-md-flex py-4">
             <div class="me-md-auto text-center text-md-start">
                 <div class="copyright">
-                    <?php
+                    {{-- <?php
                     $site_title_var = "site_title_".@Helper::currentLanguage()->code;
                     ?>
                     &copy; <?php echo date("Y") ?> {{ __('frontend.AllRightsReserved') }}
-                    . <a href="#">{{Helper::GeneralSiteSettings($site_title_var)}}</a>
+                    . <a href="#">{{Helper::GeneralSiteSettings($site_title_var)}}</a> --}}
+                    <img src="{{ asset(path: 'assets/dashboard/images/footer_logo_EVORQ.png') }}" alt="EVORQ" style="max-height: 40px; width: auto; vertical-align: middle;">
+
                 </div>
-                <div class="credits">
-                    Powered by <a href="https://smartend.app">Smartend</a>
-                </div>
+                {{-- <div class="credits">
+                    Powered by <a href="https://tayf.ae">Tayf</a>
+                </div> --}}
             </div>
             @include("frontEnd.layouts.social",["tt_position"=>"top"])
         </div>
