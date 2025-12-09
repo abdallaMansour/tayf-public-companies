@@ -7,18 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class DomainRequest extends Model
 {
+    protected $table = 'domains';
+
     use HasFactory;
 
     protected $fillable = [
         'domain',
         'username',
         'status',
-        'created_by',
-        'updated_by'
     ];
 
     protected $casts = [
-        'status' => 'integer',
+        'status' => 'boolean',
     ];
+    
+    public function scopeActive($query)
+    {
+        return $query->where('status', true);
+    }
 }
 

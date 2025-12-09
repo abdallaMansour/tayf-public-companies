@@ -2,72 +2,69 @@
 @section('title', 'Domain Requests')
 @section('content')
     <div class="padding">
-        <div class="app-body-inner">
-            <div class="row-col row-col-xs">
-                <!-- column -->
-                <div class="col-sm-4 col-md-3 bg b-r">
-                    <div class="row-col">
-                        <div class="p-a-xs b-b">
-                            <form method="POST" action="{{ route("domainRequestsSearch") }}" class="dashboard-form">
-                                @csrf
-                                <div class="input-group">
-                                    <input type="text" style="width: 85%" name="q" required value="{{ $search_word }}"
-                                           class="form-control no-border no-bg"
-                                           placeholder="Search Domain Requests">
-
-                                    <button type="submit" style="padding-top: 10px;"
-                                            class="input-group-addon no-border no-shadow no-bg pull-left"><i
-                                            class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="row-row">
-                            <div class="row-body scrollable hover">
-                                <div class="row-inner">
-                                    <div class="list inset">
-
-                                        @foreach($DomainRequests as $DomainRequest)
-                                            <div class="list-item">
-                                                <div class="list-left">
-                                                    <span class="w-40 avatar">
-                                                        <i class="material-icons" style="font-size: 24px; padding: 8px;">&#xe894;</i>
-                                                    </span>
-                                                </div>
-                                                <div class="list-body">
-                                                    {{ $DomainRequest->domain }}
-                                                    <small class="block">
-                                                        <span dir="ltr">
-                                                            <i class="fa fa-user m-r-sm text-muted"></i> {{ $DomainRequest->username }}
-                                                            <br>
-                                                            @if($DomainRequest->status == 1)
-                                                                <span class="label label-sm success">Active</span>
-                                                            @elseif($DomainRequest->status == 0)
-                                                                <span class="label label-sm warn">Pending</span>
-                                                            @else
-                                                                <span class="label label-sm danger">Inactive</span>
-                                                            @endif
-                                                        </span>
-                                                    </small>
-                                                </div>
-                                            </div>
-                                        @endforeach
-
-                                    </div>
+        <div>
+            <div class="row">
+                <div class="col-12">
+                    @if ($DomainRequest)
+                        <!-- Domain Request Info Card -->
+                        <div class="b-a p-a-md m-b-md">
+                            <h5 class="m-b-md">
+                                <i class="material-icons">&#xe894;</i> {{ __('backend.yourDomainRequest') }}
+                            </h5>
+                            <div class="b-a p-a-md m-b-md">
+                                <h5 class="m-b-md">
+                                    <i class="fa fa-globe text-primary"></i>
+                                    {{ $DomainRequest->domain }}
+                                </h5>
+                                <div class="m-b-md">
+                                    <strong>{{ __('backend.status') }}:</strong>
+                                    @if ($DomainRequest->status == 1)
+                                        <span class="label label-success">
+                                            <i class="fa fa-check-circle"></i> {{ __('backend.active') }}
+                                        </span>
+                                    @elseif($DomainRequest->status == 0)
+                                        <span class="label label-warning">
+                                            <i class="fa fa-clock"></i> {{ __('backend.pending') }}
+                                        </span>
+                                    @else
+                                        <span class="label label-danger">
+                                            <i class="fa fa-times-circle"></i> {{ __('backend.inactive') }}
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                        @if($DomainRequests->total() > config('smartend.backend_pagination'))
-                            <div class="p-a b-t text-center">
-                                {!! $DomainRequests->links() !!}
-                            </div>
-                        @endif
+                    @else
+                        <!-- No Domain Request - Show Create Form -->
+                        @include('dashboard.domain_requests.create')
+                    @endif
+
+                    <!-- Name Server Instructions - Always Visible -->
+                    <div class="b-a b-primary p-a-md m-t-md" style="background-color: #f0f8ff;">
+                        <h6 class="text-primary m-b-md">
+                            <i class="fa fa-info-circle"></i>
+                            {{ __('backend.howToConnectYourDomain') }}
+                        </h6>
+                        <p class="m-b-md">
+                            <strong>{{ __('backend.changeNameServerRecords') }}</strong>
+                        </p>
+                        <ol class="m-b-md" style="padding-left: 20px;">
+                            <li class="m-b-sm">{{ __('backend.loginToGoDaddy') }}</li>
+                            <li class="m-b-sm">{{ __('backend.goToDomainManagement') }}</li>
+                            <li class="m-b-sm">{{ __('backend.deleteNameServerRecords') }}</li>
+                        </ol>
+                        <div class="b-a p-a-md m-b-md" style="background-color: #fff;">
+                            <code style="font-size: 16px; color: #3164F5;">
+                                ns1.dns-parking.com<br>
+                                ns2.dns-parking.com
+                            </code>
+                        </div>
+                        <div class="alert alert-info m-b-0">
+                            <i class="fa fa-clock-o"></i>
+                            <strong>{{ __('backend.note') }}:</strong> {{ __('backend.domainConnectionNote') }}
+                        </div>
                     </div>
                 </div>
-                <!-- /column -->
-
-                @include('dashboard.domain_requests.create')
-
             </div>
         </div>
     </div>
@@ -75,6 +72,13 @@
         .app-footer {
             display: none;
         }
+
+        code {
+            display: block;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
     </style>
 @endsection
-

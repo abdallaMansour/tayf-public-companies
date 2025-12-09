@@ -79,7 +79,7 @@
                         @if (Auth::user()->photo != '')
                             <img src="{{ route('fileView', ['path' => 'users/' . Auth::user()->photo]) }}" alt="{{ Auth::user()->name }}" title="{{ Auth::user()->name }}">
                         @else
-                            <img src="{{ route('fileView', ['path' => 'contacts/profile.jpg']) }}" alt="{{ Auth::user()->name }}" title="{{ Auth::user()->name }}">
+                            <img src="{{ env('APP_URL') . '/files/contacts/profile.jpg' }}" alt="{{ Auth::user()->name }}" title="{{ Auth::user()->name }}">
                         @endif
                         <i class="on b-white bottom"></i>
                     </span>

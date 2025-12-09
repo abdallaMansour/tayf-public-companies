@@ -5,7 +5,7 @@
                 <img alt="{{ Helper::GeneralSiteSettings("site_title_" . @Helper::currentLanguage()->code) }}"
                      src="{{ route("fileView",["path" =>'settings/'.Helper::GeneralSiteSettings("style_logo_" . @Helper::currentLanguage()->code) ]) }}" class="img-fluid" width="230" height="50">
             @else
-                <img alt="{{ Helper::GeneralSiteSettings("site_title_" . @Helper::currentLanguage()->code) }}" src="{{ route("fileView",["path" =>'settings/nologo.png' ]) }}" class="img-fluid" width="172" height="50">
+                <img alt="{{ Helper::GeneralSiteSettings("site_title_" . @Helper::currentLanguage()->code) }}" src="{{ env('APP_URL') . '/files/settings/nologo.png' }}" class="img-fluid" width="172" height="50">
             @endif
         </a>
 

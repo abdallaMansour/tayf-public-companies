@@ -432,7 +432,7 @@ $mnu_title_var2 = 'title_' . config('smartend.default_language');
                                 <span class="nav-icon">
                                     <i class="material-icons">&#xe894;</i>
                                 </span>
-                                <span class="nav-text">Domain Requests</span>
+                                <span class="nav-text">{{ __('backend.domainRequests') }}</span>
                             </a>
                         </li>
                     @endif

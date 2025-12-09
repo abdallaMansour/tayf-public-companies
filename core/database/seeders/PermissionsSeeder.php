@@ -15,7 +15,7 @@ class PermissionsSeeder extends Seeder
         //
         $Permissions = new Permissions();
         $Permissions->name = "Webmaster";
-        $Permissions->view_status = false;
+        $Permissions->view_status = true;
         $Permissions->add_status = true;
         $Permissions->edit_status = true;
         $Permissions->delete_status = true;
